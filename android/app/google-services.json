@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "5400960954",
+    "project_id": "contracare-32c1e",
+    "storage_bucket": "contracare-32c1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5400960954:android:1b50da35171e61cf950783",
+        "android_client_info": {
+          "package_name": "com.purvaja.contra_care"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5400960954-pq7f4b0l26f6kuucqn7cv0rd10tp4ooh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4_vFF8W1UGg-eiI1cXfnY5nU72uRSgFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5400960954-pq7f4b0l26f6kuucqn7cv0rd10tp4ooh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
