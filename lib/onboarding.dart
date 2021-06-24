@@ -290,7 +290,7 @@ class HomeController extends StatelessWidget {
             return onboarding();
             // return Home();
           } else {
-            return Login();
+            return HomePage();
           }
           // return user ? Home() : SignUpView();
         }
