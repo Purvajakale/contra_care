@@ -71,7 +71,9 @@ class _HomePageState extends State<HomePage> {
         title: Text("Contracare"),
         automaticallyImplyLeading: false,
         actions: [IconButton(icon: Icon(Icons.logout), onPressed: signOut)],
-      ),
+      ),body: Container(child: TextButton(onPressed: () {
+        Navigator.pushReplacementNamed(context, "/");
+      }, child: Text('TRIAL BUTTON'),),),
     );
   }
 }
