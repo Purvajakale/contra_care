@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
       if (user != null) {
         print(user);
         _auth.currentUser.updateProfile(displayName: _name);
-        Navigator.pushReplacementNamed(context, "/");
+        Navigator.pushReplacementNamed(context, "home");
       }
     });
 
