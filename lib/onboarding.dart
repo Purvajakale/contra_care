@@ -270,10 +270,29 @@ class _onboardingState extends State<onboarding> {
     currentPage = value;
     setState(() {});
   }
+  
+  Future alertbox() async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Alert'),
+        content: Text('fuck !!! u have been warned'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text('OK'),
+          )
+        ],
+      ),
+    );
+  }
 
   openLoginPage() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => Login()));
+    alertbox();
   }
 }
 
