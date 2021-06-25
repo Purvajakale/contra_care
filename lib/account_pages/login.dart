@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:contra_care/homepage.dart';
-import 'package:contra_care/pass_reset.dart';
-import 'package:contra_care/animations/animation.dart';
-import 'package:contra_care/sign_up.dart';
+import 'package:contra_care/views/homepage.dart';
+import 'package:contra_care/account_pages/pass_reset.dart';
+import 'package:contra_care/services/animation.dart';
+import 'package:contra_care/account_pages/sign_up.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
       if (user != null) {
         print(user);
         _auth.currentUser.updateProfile(displayName: _name);
-        Navigator.pushReplacementNamed(context, "/");
+        Navigator.pushReplacementNamed(context, "home");
       }
     });
 
@@ -71,6 +71,21 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
+    final loginButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Color(0xff82b67c),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width*0.55,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: login,
+        child: Text("Login",
+            textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -138,15 +153,15 @@ class _LoginState extends State<Login> {
                                 1.7,
                                 Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Color.fromRGBO(196, 135, 198, .3),
-                                          blurRadius: 20,
-                                          offset: Offset(0, 10),
-                                        )
-                                      ],
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color.fromRGBO(196, 135, 198, .3),
+                                        blurRadius: 20,
+                                        offset: Offset(0, 10),
+                                      )
+                                    ],
                                   ),
 
                                   child: Column(
@@ -196,20 +211,6 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               ),
-                              // Container(
-                              //   child: TextFormField(
-                              //       validator: (input) {
-                              //         if (input.length < 6)
-                              //           return 'Provide Minimum 6 Character';
-                              //         return null;
-                              //       },
-                              //       decoration: InputDecoration(
-                              //         labelText: 'Password',
-                              //         prefixIcon: Icon(Icons.lock),
-                              //       ),
-                              //       obscureText: true,
-                              //       onSaved: (input) => _password = input),
-                              // ),
                               SizedBox(height: 20),
                               FadeAnimation(
                                 1.7,
@@ -230,24 +231,24 @@ class _LoginState extends State<Login> {
                               SizedBox(
                                 height: 15,
                               ),
-                              FadeAnimation( 1.9,
-                                Container(
-                                  height: 50,
-                                  margin: EdgeInsets.symmetric(horizontal: 60),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Color.fromRGBO(49, 39, 79, 1),
-                                  ),
-                                  child: Center(
-                                    child: TextButton(
-                                      child: Text(
-                                        "Login",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                      onPressed: login,
-                                    ),
-                                  ),
-                                ),
+                              FadeAnimation( 1.9, loginButton
+                                // Container(
+                                //   height: 50,
+                                //   margin: EdgeInsets.symmetric(horizontal: 60),
+                                //   decoration: BoxDecoration(
+                                //     borderRadius: BorderRadius.circular(50),
+                                //     color: Color.fromRGBO(49, 39, 79, 1),
+                                //   ),
+                                //   child: Center(
+                                //     child: TextButton(
+                                //       child: Text(
+                                //         "Login",
+                                //         style: TextStyle(color: Colors.white),
+                                //       ),
+                                //       onPressed: login,
+                                //     ),
+                                //   ),
+                                // ),
                               ),
                               FadeAnimation(2,
                                 Center(
@@ -261,18 +262,6 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               ),
-                              // Row(
-                              //   mainAxisAlignment: MainAxisAlignment.center,
-                              //   children: [
-                              //     TextButton(
-                              //       child: Text('Forgot Password?'),
-                              //       onPressed: () => Navigator.of(context).push(
-                              //         MaterialPageRoute(
-                              //             builder: (context) => ResetScreen()),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
                             ],
                           ),
                         ),
@@ -286,30 +275,3 @@ class _LoginState extends State<Login> {
         ));
   }
 }
-
-/* FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Store()),
-                    );
-                  },
-                  child: Text(
-                    "Go to Ice cream store",
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  color: Colors.pinkAccent[400],
-                  textColor: Colors.white),
-              FlatButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Start()),
-                    );
-                  },
-                  child: Text(
-                    "Go to Homepage",
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  color: Colors.indigo[600],
-                  textColor: Colors.white)*/

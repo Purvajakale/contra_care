@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.purvaja.contra_care">
    <application
-        android:label="contra_care"
+        android:label="Contracare"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

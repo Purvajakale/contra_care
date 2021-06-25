@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:contra_care/animations/animation.dart';
-import 'package:contra_care/login.dart';
+import 'package:contra_care/services/animation.dart';
+import 'package:contra_care/account_pages/login.dart';
 
 class ResetScreen extends StatefulWidget{
   @override
@@ -16,6 +16,46 @@ class _ResetScreenState extends State<ResetScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
+
+    final resetButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Color(0xff82b67c),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width*0.55,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          if(_email != null){
+            auth.sendPasswordResetEmail(email: _email);
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => Login(),
+              ),
+            );
+          }
+          else{
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: Text('ERROR'),
+                content: Text('enter email'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('OK'),
+                  )
+                ],
+              ),
+            );
+          }
+        },
+        child: Text("Send Request",
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -75,7 +115,7 @@ class _ResetScreenState extends State<ResetScreen> {
                             ),),
 
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
 
                           FadeAnimation(
@@ -119,52 +159,14 @@ class _ResetScreenState extends State<ResetScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 35,
                           ),
 
                           FadeAnimation( 1.9,
-                            Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 60),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Color.fromRGBO(49, 39, 79, 1),
-                              ),
-                              child: Center(
-                                child: TextButton(
-                                  child: Text(
-                                    "Send Request",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    if(_email != null){
-                                      auth.sendPasswordResetEmail(email: _email);
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context) => Login(),
-                                        ),
-                                      );
-                                    }
-                                   else{
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) => AlertDialog(
-                                          title: Text('ERROR'),
-                                          content: Text('enter email'),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              onPressed: () {
-                                                Navigator.of(ctx).pop();
-                                              },
-                                              child: Text('OK'),
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
+                            resetButton
+                          ),
+                          SizedBox(
+                            height: 15,
                           ),
                           FadeAnimation(2,
                             Center(
