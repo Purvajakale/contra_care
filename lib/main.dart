@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:contra_care/login.dart';
-import 'package:contra_care/sign_up.dart';
-import 'package:contra_care/onboarding.dart';
+import 'package:contra_care/account_pages/login.dart';
+import 'package:contra_care/account_pages/sign_up.dart';
+import 'package:contra_care/account_pages/onboarding.dart';
+import 'package:contra_care/views/homepage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,4 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
