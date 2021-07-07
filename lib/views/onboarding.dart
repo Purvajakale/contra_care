@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:contra_care/views/homepage.dart';
-import 'login.dart';
+import '../account_pages/login.dart';
 import 'package:contra_care/services/anon_auth.dart';
+import 'package:contra_care/features/reminders/screens/home/home.dart';
+
 
 class Onboarding extends StatelessWidget {
   @override
@@ -79,7 +81,7 @@ class _onboardingState extends State<onboarding> {
 
           Container(
             decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage('images/background-3.jpeg'),
+                image: DecorationImage(image: AssetImage('assets/images/background-3.jpeg'),
                 fit: BoxFit.cover)),
           ),
           Column(
@@ -118,6 +120,7 @@ class _onboardingState extends State<onboarding> {
                   SizedBox(
                     height: 10,
                   ),
+                  // ignore: missing_required_param
                   TextButton(
                     child: Text(
                       "Don't want to create an account?",
@@ -159,7 +162,7 @@ class _onboardingState extends State<onboarding> {
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage('images/$img.png'))),
+              image: DecorationImage(image: AssetImage('assets/images/$img.png'))),
         ),
       ],
     );

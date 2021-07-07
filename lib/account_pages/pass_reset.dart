@@ -76,7 +76,7 @@ class _ResetScreenState extends State<ResetScreen> {
                           Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/background-2.png'),
+                                    image: AssetImage('assets/images/background-2.png'),
                                     fit: BoxFit.fill)),
                           )),
                     ),
@@ -88,7 +88,7 @@ class _ResetScreenState extends State<ResetScreen> {
                           Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/background.png'),
+                                    image: AssetImage('assets/images/background.png'),
                                     fit: BoxFit.fill)),
                           )),
                     )

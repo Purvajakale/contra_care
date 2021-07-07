@@ -31,13 +31,6 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
-  // checkAuthentication() async {
-  //   _auth.authStateChanges().listen((user) async {
-  //     if (user != null) {
-  //       Navigator.pushReplacementNamed(context, "/");
-  //     }
-  //   });
-  // }
 
   signUp() async {
     if (_formKey.currentState.validate()) {
@@ -103,31 +96,31 @@ class _SignUpState extends State<SignUp> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  height: 400,
+                  height: 350,
                   child: Stack(
                     children: <Widget>[
                       Positioned(
                         top: -40,
-                        height: 400,
+                        height: 350,
                         width: width,
                         child: FadeAnimation(
                             1,
                             Container(
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage('images/background-2.png'),
+                                      image: AssetImage('assets/images/background-2.png'),
                                       fit: BoxFit.fill)),
                             )),
                       ),
                       Positioned(
-                        height: 400,
+                        height: 350,
                         width: width + 20,
                         child: FadeAnimation(
                             1.3,
                             Container(
                               decoration: BoxDecoration(
                                   image: DecorationImage(
-                                      image: AssetImage('images/background.png'),
+                                      image: AssetImage('assets/images/background.png'),
                                       fit: BoxFit.fill)),
                             )),
                       )
@@ -189,7 +182,7 @@ class _SignUpState extends State<SignUp> {
                                               border: InputBorder.none,
                                               hintText: "name",
                                               hintStyle:
-                                              TextStyle(color: Colors.grey)
+                                              TextStyle(color: Colors.grey[600])
                                           ),
                                           onSaved: (input) => _name = input
                                       ),
@@ -210,7 +203,7 @@ class _SignUpState extends State<SignUp> {
                                               border: InputBorder.none,
                                               hintText: "email",
                                               hintStyle:
-                                              TextStyle(color: Colors.grey)),
+                                              TextStyle(color: Colors.grey[600])),
                                           onSaved: (input) => _email = input
                                       ),
                                     ),
@@ -231,7 +224,7 @@ class _SignUpState extends State<SignUp> {
                                               border: InputBorder.none,
                                               hintText: "password",
                                               hintStyle:
-                                              TextStyle(color: Colors.grey)),
+                                              TextStyle(color: Colors.grey[600])),
                                           onSaved: (input) => _password = input
                                       ),
                                     ),
