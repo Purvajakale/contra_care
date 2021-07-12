@@ -14,7 +14,7 @@ class DemoApp extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Card(
-              color: Colors.teal,
+              color: Color(0xff7c83fd),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Column(
@@ -26,7 +26,7 @@ class DemoApp extends StatelessWidget {
                     child: Text(
                       'E-Pill Alternative',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                     ),
                   ),
                   Padding(
@@ -49,7 +49,7 @@ class DemoApp extends StatelessWidget {
               thickness: 12,
             ),
             Card(
-              color: Colors.teal,
+              color: Color(0xff7c83fd),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Column(
@@ -61,7 +61,7 @@ class DemoApp extends StatelessWidget {
                     child: Text(
                       'COC pills',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                     ),
                   ),
                   Padding(
@@ -84,7 +84,7 @@ class DemoApp extends StatelessWidget {
               thickness: 12,
             ),
             Card(
-              color: Colors.teal,
+              color: Color(0xff7c83fd),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Column(
@@ -96,7 +96,7 @@ class DemoApp extends StatelessWidget {
                     child: Text(
                       'YEARLY CHECKUP (COC)',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                     ),
                   ),
                   Padding(
@@ -119,7 +119,7 @@ class DemoApp extends StatelessWidget {
               thickness: 12,
             ),
             Card(
-              color: Colors.teal,
+              color: Color(0xff7c83fd),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),
               child: Column(
@@ -131,7 +131,7 @@ class DemoApp extends StatelessWidget {
                     child: Text(
                       'E-Pill Alternative',
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                     ),
                   ),
                   Padding(

@@ -20,11 +20,11 @@ class _LoginState extends State<Login> {
 
   checkAuth() async {
     _auth.authStateChanges().listen((user) {
-      if (user != null && _email=='contracareofficial@gmail.com') {
+      if (user != null && _email == 'contracareofficial@gmail.com') {
         print(user);
         _auth.currentUser.updateProfile(displayName: _name);
         Navigator.pushReplacementNamed(context, "adminpanel");
-      }else if(user != null) {
+      } else if (user != null) {
         print(user);
         _auth.currentUser.updateProfile(displayName: _name);
         Navigator.pushReplacementNamed(context, "home");
@@ -59,32 +59,32 @@ class _LoginState extends State<Login> {
   login() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      if (_email == 'contracareofficial@gmail.com' ) {try{
-        UserCredential user = await _auth.signInWithEmailAndPassword(
-            email: _email, password: _password);
+      if (_email == 'contracareofficial@gmail.com') {
+        try {
+          UserCredential user = await _auth.signInWithEmailAndPassword(
+              email: _email, password: _password);
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AdminPanel()),
           );
-      }catch (e) {
-        showError(e.message);
-        print(e);
-      }}
+        } catch (e) {
+          showError(e.message);
+          print(e);
+        }
+      } else
+        // if(_role=='admin'&& _email=='contracareofficial@gmail.com'){checkrole();}
 
-      else
-     // if(_role=='admin'&& _email=='contracareofficial@gmail.com'){checkrole();}
-
-      try {
-        UserCredential user = await _auth.signInWithEmailAndPassword(
-            email: _email, password: _password);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      } catch (e) {
-        showError(e.message);
-        print(e);
-      }
+        try {
+          UserCredential user = await _auth.signInWithEmailAndPassword(
+              email: _email, password: _password);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        } catch (e) {
+          showError(e.message);
+          print(e);
+        }
     }
   }
 
@@ -271,32 +271,15 @@ class _LoginState extends State<Login> {
                               SizedBox(
                                 height: 12,
                               ),
-                              FadeAnimation(1.9, loginButton
-                                  // Container(
-                                  //   height: 50,
-                                  //   margin: EdgeInsets.symmetric(horizontal: 60),
-                                  //   decoration: BoxDecoration(
-                                  //     borderRadius: BorderRadius.circular(50),
-                                  //     color: Color.fromRGBO(49, 39, 79, 1),
-                                  //   ),
-                                  //   child: Center(
-                                  //     child: TextButton(
-                                  //       child: Text(
-                                  //         "Login",
-                                  //         style: TextStyle(color: Colors.white),
-                                  //       ),
-                                  //       onPressed: login,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                  ),
+                              FadeAnimation(1.9, loginButton),
                               FadeAnimation(
                                 2,
                                 Center(
                                   child: TextButton(
-                                    child: Text("Create Account",
-                                        style: TextStyle(
-                                            color: Colors.grey[700]),),
+                                    child: Text(
+                                      "Create Account",
+                                      style: TextStyle(color: Colors.grey[700]),
+                                    ),
                                     onPressed: () => Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) => SignUp()),

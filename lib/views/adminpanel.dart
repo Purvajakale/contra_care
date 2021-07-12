@@ -1,8 +1,7 @@
 import 'package:contra_care/services/admin_faqs_update.dart';
 import 'package:contra_care/services/admin_pills_update.dart';
-import 'package:contra_care/services/pills1_update.dart';
-import 'package:contra_care/services/faq1update.dart';
 import 'package:contra_care/services/translate.dart';
+import 'package:contra_care/views/user_queries.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class _AdminPanelState extends State<AdminPanel> {
         content: Text(
             'You have been successfully logged out, now you will be redirected to Homepage'),
         actions: <Widget>[
-          FlatButton(
+          ElevatedButton(
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -36,6 +35,7 @@ class _AdminPanelState extends State<AdminPanel> {
     );
     return await _auth.signOut();
   }
+ 
 
   User user;
   bool isloggedin = false;
@@ -135,6 +135,16 @@ class _AdminPanelState extends State<AdminPanel> {
               child: ListTile(
                 title: Text("Update FAQs"),
                 trailing: Icon(Icons.info),
+              ),
+            ),
+              TextButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => UserQuery()));
+              },
+              child: ListTile(
+                title: Text("User queries"),
+                trailing: Icon(Icons.query_builder),
               ),
             ),
             TextButton(

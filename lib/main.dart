@@ -1,5 +1,6 @@
 import 'package:contra_care/features/reminders/screens/add_new_medicine/add_new_medicine.dart';
 import 'package:contra_care/views/adminpanel.dart';
+import 'package:contra_care/views/brandsinfo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:contra_care/account_pages/login.dart';
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         "SignUp":(BuildContext context)=>SignUp(),
         "start":(BuildContext context)=>Onboarding(),
         "home":(BuildContext context)=>HomePage(),
+        "pills" : (BuildContext context)=>PillsBrands(),
         "adminpanel":(BuildContext context)=>AdminPanel(),
         "reminder":(BuildContext context)=>Home(),
         "/add_new_medicine":(BuildContext context)=>AddNewMedicine(),

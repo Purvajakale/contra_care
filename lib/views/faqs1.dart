@@ -44,8 +44,8 @@ class _FaqPage1State extends State<FaqPage1> {
                         child: Padding(padding: EdgeInsets.only(left:10,right: 10),
                           child: Card(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-                            shadowColor: Colors.greenAccent[400],
-                            elevation: 5,
+                            shadowColor: Colors.indigoAccent,
+                            elevation: 2,
                             child: ExpansionTile(
                               key: keyTile,
                               backgroundColor: Colors.transparent,
@@ -54,12 +54,12 @@ class _FaqPage1State extends State<FaqPage1> {
                               title: Text(
                                 snapshot.data.docs[index]['ques'],
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                    fontSize: 17, fontWeight: FontWeight.bold),
                               ),
                               children: [
                                 Text(
                                   snapshot.data.docs[index]['ans'],
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ],
                             ),

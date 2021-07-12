@@ -1,4 +1,5 @@
 // import 'package:contra_care/services/validator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,9 @@ class FormFour extends StatefulWidget {
 }
 
 class _FormFourState extends State<FormFour> with Validator {
+  String id;
+  final db = FirebaseFirestore.instance;
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _messageController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -42,6 +46,8 @@ class _FormFourState extends State<FormFour> with Validator {
       experienceIndex = index;
     });
   }
+
+  String name, description,email;
 
   final Color activeColor = Colors.pink[400];
   final Color inActiveColor = Colors.grey[50];
@@ -93,6 +99,16 @@ class _FormFourState extends State<FormFour> with Validator {
       ],
     );
   }
+    void createData() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      DocumentReference ref = await db
+          .collection('query')
+          .add({'name': name,'desc':description,'email':email});
+      setState(() => id = ref.id);
+      print(ref.id);
+    }
+  }
 
   Widget _buildName() {
     return Padding(
@@ -105,30 +121,31 @@ class _FormFourState extends State<FormFour> with Validator {
             errorStyle: _errorStyle,
             border: InputBorder.none,
             contentPadding:
-            EdgeInsets.symmetric(vertical: minValue, horizontal: minValue),
+                EdgeInsets.symmetric(vertical: minValue, horizontal: minValue),
             labelText: 'Full  Name',
             labelStyle: TextStyle(fontSize: 16.0, color: Colors.black87)),
+        onSaved: (value) => name = value,
       ),
     );
   }
 
   Widget _buildEmail() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: minValue),
-      child: TextFormField(
-        controller: _emailController,
-        keyboardType: TextInputType.text,
-        validator: validateEmail,
-        onChanged: (String value) {},
-        decoration: InputDecoration(
-            errorStyle: _errorStyle,
-            border: InputBorder.none,
-            contentPadding:
-            EdgeInsets.symmetric(vertical: minValue, horizontal: minValue),
-            labelText: 'Email',
-            labelStyle: TextStyle(fontSize: 16.0, color: Colors.black87)),
-      ),
-    );
+        padding: EdgeInsets.symmetric(horizontal: minValue),
+        child: TextFormField(
+          controller: _emailController,
+          keyboardType: TextInputType.text,
+          validator: validateEmail,
+          onChanged: (String value) {},
+          decoration: InputDecoration(
+              errorStyle: _errorStyle,
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(
+                  vertical: minValue, horizontal: minValue),
+              labelText: 'Email',
+              labelStyle: TextStyle(fontSize: 16.0, color: Colors.black87)),
+          onSaved: (value) => email = value,
+        ));
   }
 
   Widget _buildDescription() {
@@ -141,9 +158,10 @@ class _FormFourState extends State<FormFour> with Validator {
         decoration: InputDecoration(
             errorStyle: _errorStyle,
             border: InputBorder.none,
-            labelText: 'Description',
+            labelText: 'Your query/doubts ',
             contentPadding: EdgeInsets.symmetric(horizontal: minValue),
             labelStyle: TextStyle(fontSize: 16.0, color: Colors.black87)),
+            onSaved: (value) => description = value,
       ),
     );
   }
@@ -158,14 +176,14 @@ class _FormFourState extends State<FormFour> with Validator {
 
   Widget _buildSubmitBtn() {
     return Container(
-      width: double.maxFinite,
+      width: 260,
       padding: EdgeInsets.symmetric(horizontal: minValue * 3),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(2),
+          borderRadius: BorderRadius.circular(5),
           gradient:
-          LinearGradient(colors: [Colors.pink[700], Colors.pink[400]])),
+              LinearGradient(colors: [Colors.indigo[600], Colors.blue[200]])),
       child: RaisedButton(
-        onPressed: () => null,
+        onPressed:createData,
         padding: EdgeInsets.symmetric(vertical: minValue * 2.4),
         elevation: 0.0,
         color: Colors.transparent,
@@ -178,24 +196,25 @@ class _FormFourState extends State<FormFour> with Validator {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('Ask your queries',style: TextStyle(fontSize: 18),),backgroundColor: Colors.indigo),
       body: Container(
         // decoration: BoxDecoration(
         //     image: DecorationImage(
         //         image: AssetImage('assets/images/feedback-four-bg.png'),
         //         fit: BoxFit.cover)),
         child: Container(
-          width: double.maxFinite,
+          //width: double.maxFinite,
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.bottomCenter, colors: [
-                Colors.black.withOpacity(0.8),
-                Colors.black.withOpacity(0.7)
-              ])),
+            Colors.black.withOpacity(0.8),
+            Colors.black.withOpacity(0.7)
+          ])),
           child: Column(
             children: <Widget>[
               Expanded(
                 child: Padding(
                   padding:
-                  const EdgeInsets.only(top: 25.0, left: 25.0, right: 25.0),
+                      const EdgeInsets.only( left: 25.0, right: 25.0),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -228,7 +247,7 @@ class _FormFourState extends State<FormFour> with Validator {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(
-                          height: minValue * 7,
+                          height: minValue * 5,
                         ),
                         Text(
                           "How was your experience?",
@@ -237,7 +256,10 @@ class _FormFourState extends State<FormFour> with Validator {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         ),
-                        SizedBox(
+                        Form(
+            key: _formKey,
+            //child: Column(children:<Widget>[_buildName(),_buildEmail(),_buildDescription(),], ),
+          child:Column(children: [SizedBox(
                           height: minValue,
                         ),
                         _buildEmoji(),
@@ -254,10 +276,11 @@ class _FormFourState extends State<FormFour> with Validator {
                         ),
                         _buildTextBackground(_buildDescription()),
                         SizedBox(
-                          height: minValue * 6,
+                          height: minValue * 5,
                         ),
-                        _buildSubmitBtn()
-                      ],
+                        _buildSubmitBtn()],)
+                        
+                         ), ],
                     ),
                   ),
                 ),
