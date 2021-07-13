@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contra_care/services/admin_faqs_update.dart';
 import 'package:contra_care/services/admin_pills_update.dart';
 import 'package:contra_care/services/translate.dart';
@@ -5,6 +6,7 @@ import 'package:contra_care/views/user_queries.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:neumorphic_container/neumorphic_container.dart';
 
 class AdminPanel extends StatefulWidget {
   //const AdminPanel({ Key? key }) : super(key: key);
@@ -80,37 +82,37 @@ class _AdminPanelState extends State<AdminPanel> {
                     SizedBox(width: 3),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  new AlertDialog(
-                                title: Text('${user.displayName}'),
-                                content: new Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('${user.email}'),
-                                  ],
-                                ),
-                                actions: <Widget>[
-                                  new TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Close'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "My Profile",
-                            style: TextStyle(fontSize: 23),
-                          ),
-                        ),
+                      children: [Text('  Admin',style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold))
+                        // TextButton(
+                        //   onPressed: () {
+                        //     showDialog(
+                        //       context: context,
+                        //       builder: (BuildContext context) =>
+                        //           new AlertDialog(
+                        //         title: Text('${user.displayName}'),
+                        //         content: new Column(
+                        //           mainAxisSize: MainAxisSize.min,
+                        //           crossAxisAlignment: CrossAxisAlignment.start,
+                        //           children: <Widget>[
+                        //             Text('${user.email}'),
+                        //           ],
+                        //         ),
+                        //         actions: <Widget>[
+                        //           new TextButton(
+                        //             onPressed: () {
+                        //               Navigator.of(context).pop();
+                        //             },
+                        //             child: const Text('Close'),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: Text(
+                        //     "Contracare Admin",
+                        //     style: TextStyle(fontSize: 23),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],
@@ -160,22 +162,46 @@ class _AdminPanelState extends State<AdminPanel> {
           ],
         ),
       ),
-      body: Container(
-          child: Column(
-        children: [
-          Padding(
-              padding: const EdgeInsets.all(40),
-              child: Text('welcome to ADMIN PAGE')),
-          ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PillInfoUpdate())),
-              child: Text('update data')),
-          ElevatedButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => App())),
-              child: Text('Translate'))
-        ],
-      )),
+     body: Container(
+       child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance.collection('users').snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return Text('loading users');
+                return ListView.builder(
+                    itemCount: snapshot.data.size,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        // child: ListTile(
+                        //
+                        //   title: Text(
+                        //     snapshot.data.docs[index]['name'],
+                        //     style: TextStyle(fontSize: 20),
+                        //   ),
+                        // ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: NeumorphicContainer(
+                            height: 50,
+                            width: 60,
+                            borderRadius: 150,
+                            depth: 20,
+                            primaryColor: Colors.white,
+                            borderColor: Colors.indigo,
+                            borderThickness: 1,
+                            curvature: Curvature.flat,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20, top: 13),
+            
+                              child: Text(snapshot.data.docs[index]['name'],
+                              style: TextStyle(fontSize: 17),),
+                            ),
+                          ),
+                        ),
+                      );
+                    });
+              }
+       ),
+     ),
     );
   }
 }

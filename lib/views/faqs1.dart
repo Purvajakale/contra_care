@@ -45,7 +45,7 @@ class _FaqPage1State extends State<FaqPage1> {
                           child: Card(
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                             shadowColor: Colors.indigoAccent,
-                            elevation: 2,
+                            elevation: 4,
                             child: ExpansionTile(
                               key: keyTile,
                               backgroundColor: Colors.transparent,

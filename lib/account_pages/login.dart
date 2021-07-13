@@ -16,7 +16,9 @@ class _LoginState extends State<Login> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _name, _email, _password, _role = 'admin';
+  String _name, _email, _password, _role = 'user';
+
+  
 
   checkAuth() async {
     _auth.authStateChanges().listen((user) {

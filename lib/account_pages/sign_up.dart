@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:contra_care/services/animation.dart';
@@ -10,10 +11,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String id;
+  final db = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  String _name, _email, _password;
+  String _name, _email, _password,_role='user';
 
   checkAuth() async {
     _auth.authStateChanges().listen((user) {
@@ -31,10 +34,22 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+   void createData() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      DocumentReference ref = await db
+          .collection('users')
+          .add({'email': _email,'role':_role,'name':_name});
+      setState(() => id = ref.id);
+      print(ref.id);
+    }
+  }
+
 
   signUp() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      createData();
 
       try {
         UserCredential user = await _auth.createUserWithEmailAndPassword(

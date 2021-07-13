@@ -179,7 +179,7 @@ class _FormFourState extends State<FormFour> with Validator {
       width: 260,
       padding: EdgeInsets.symmetric(horizontal: minValue * 3),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(30),
           gradient:
               LinearGradient(colors: [Colors.indigo[600], Colors.blue[200]])),
       child: RaisedButton(
