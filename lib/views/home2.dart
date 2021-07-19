@@ -1,354 +1,305 @@
-import 'dart:convert';
-
 import 'package:contra_care/features/reminders/screens/home/home.dart';
-
 import 'package:contra_care/views/about_us.dart';
 import 'package:contra_care/views/brandsinfo.dart';
+import 'package:contra_care/views/carouselslider.dart';
 import 'package:contra_care/views/data/readmore.dart';
 import 'package:contra_care/views/faqs.dart';
-
+import 'package:contra_care/views/onboarding%20screen/onboard_main.dart';
 import 'package:contra_care/views/queryform.dart';
+import 'package:contra_care/views/translatordemo.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:ui';
 
-enum Category { FAQ, PILLS, ASKUS, PILLTRACKER }
+import 'package:google_fonts/google_fonts.dart';
 
-class HomePage2 extends StatefulWidget {
-  const HomePage2({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key key}) : super(key: key);
 
   @override
-  _HomePage2State createState() => _HomePage2State();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomePage2State extends State<HomePage2> {
+class _HomePageState extends State<HomePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   User user;
   bool isloggedin = false;
 
+  Future signOut() async {
+    await showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Logout'),
+        content: Text(
+            'You have been successfully logged out, now you will be redirected to HomePage'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text('OK'),
+          )
+        ],
+      ),
+    );
+    return await _auth.signOut();
+  }
+
+  checkAuthentication() async {
+    _auth.authStateChanges().listen((user) {
+      if (user == null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Onboarding()),
+        );
+      }
+    });
+  }
+
+  getUser() async {
+    User firebaseUser = _auth.currentUser;
+    await firebaseUser?.reload();
+    firebaseUser = _auth.currentUser;
+
+    if (firebaseUser != null) {
+      setState(() {
+        this.user = firebaseUser;
+        this.isloggedin = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.checkAuthentication();
+    this.getUser();
+    super.initState();
+  }
+
   GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(title: Text('Contracare'),
+      appBar: AppBar(
         brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.teal),
-        backgroundColor: Colors.tealAccent[700],
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color(0xffFFE3ED),
         elevation: 0,
       ),
-      drawer: Container(
-        color: Colors.tealAccent[700],
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: ListView(
-          children: [
-            Container(
-              height: 140,
-              child: DrawerHeader(
-                decoration: BoxDecoration(
-                  //color: Colors.grey,
-                  gradient: LinearGradient(colors: [
-                    Colors.grey[50],
-                    Colors.tealAccent[700],
-                  ]),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      'assets/images/profile.png',
-                      height: 100,
-                      width: 80,
-                    ),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  new AlertDialog(
-                                //title: Text('${user.displayName}'),
-                                content: new Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('${user.email}'),
-                                  ],
-                                ),
-                                actions: <Widget>[
-                                  new TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Close'),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          child: Text(
-                            "My profile",
-                            style: TextStyle(
-                                fontSize: 23,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Home()));
-              },
-              child: ListTile(
-                title: Text("Pills Tracker"),
-                trailing: Icon(Icons.alarm),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FaqsPage()));
-              },
-              child: ListTile(
-                title: Text("FAQs"),
-                trailing: Icon(Icons.info),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AboutUs()));
-              },
-              child: ListTile(
-                title: Text("About Us"),
-                trailing: Icon(Icons.face),
-              ),
-            ),
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.push(context,
-            //         MaterialPageRoute(builder: (context) => PillsBrands()));
-            //   },
-            //   child: ListTile(
-            //     title: Text("Pills Info"),
-            //     trailing:
-            //     Icon(Icons.medication),
-            //
-            //   ),
-            // ),
-
-            TextButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FormFour()));
-              },
-              child: ListTile(
-                title: Text("Ask query"),
-                trailing: Icon(Icons.query_stats),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
-              },
-              child: ListTile(
-                title: Text("Logout"),
-                trailing: Icon(Icons.logout),
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.teal[100],
-              child: Column(
-                children: [
-                  // Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 16),
-                    // child: Text(
-                    //   "Contracare",
-                    //   style: TextStyle(
-                    //     color: Colors.black,
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 24,
-                    //   ),
-                    // ),
-                  // ),
-                  Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      "Know more about contraceptive pills!",
-                      style: TextStyle(
-                        color: Colors.grey[800],
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Features",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[800],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildPetCategory(Category.FAQ, "56", Colors.orange[200],
-                          Colors.teal[200]),
-                      buildPetCategory(Category.PILLS, "210", Colors.blue[200],
-                          Colors.lightGreen[400]),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildPetCategory(Category.ASKUS, "90", Colors.green[200],
-                          Colors.amber),
-                      buildPetCategory(Category.PILLTRACKER, "340",
-                          Colors.red[300], Colors.blueAccent[200]),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Divider(
-              color: Colors.transparent,
-              thickness: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Container(color: Colors.transparent, child: DemoApp()),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildPetCategory(
-      Category category, String total, Color color, Color color2) {
-    return Expanded(
-      child: GestureDetector(
-        // onTap: () {
-        //   Navigator.push(
-        //     context,
-        //     MaterialPageRoute(builder: (context) => CategoryList(category:Category.FAQ )),
-        //   );
-        // },
+      drawer: Padding(
+        padding: EdgeInsets.only(top: 26, bottom: 5),
         child: Container(
-          height: 80,
-          padding: EdgeInsets.all(12),
-          margin: EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: color2.withOpacity(0.5),
-            border: Border.all(
-              color: Colors.grey[200],
-              width: 1,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          child: Row(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+              color: Color(0xffFFE3ED)),
+          //color: Colors.white,
+          // color: Color(0xff96BAFF),
+          width: MediaQuery.of(context).size.width * 0.75,
+          height: 850,
+          child: ListView(
             children: [
               Container(
-                height: 56,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: color.withOpacity(0.5),
-                ),
-                child: Center(
-                  child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Image.asset(
-                      "assets/images/" +
-                          (category == Category.FAQ
-                              ? "cream"
-                              : category == Category.PILLS
-                                  ? "capsule"
-                                  : category == Category.ASKUS
-                                      ? "drops"
-                                      : "syringe") +
-                          ".png",
-                      fit: BoxFit.fitHeight,
-                    ),
+                height: 150,
+                child: DrawerHeader(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      Color(0xffFFE3ED),
+                      Colors.grey[100],
+                    ]),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/images/profile.png',
+                        height: 100,
+                        width: 80,
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    new AlertDialog(
+                                  title: Text('${user.displayName}'),
+                                  content: new Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text('${user.email}'),
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    new TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('Close'),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "My profile",
+                              style: TextStyle(
+                                  fontSize: 25,fontWeight: FontWeight.bold,
+                              
+                                  color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(
-                width: 12,
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                },
+                child: 
+                ListTile(
+                  title: Text("Pills Tracker",style: TextStyle( fontSize: 17),),
+                  trailing: Icon(Icons.alarm,size: 28,),
+                ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    (category == Category.FAQ
-                        ? "FAQ"
-                        : category == Category.PILLS
-                            ? "Pills Info"
-                            : category == Category.ASKUS
-                                ? "Ask Us"
-                                : "Pill Tracker"),
-                    style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  // Text(
-                  //   (category == Category.FAQ
-                  //       ? "background"
-                  //       : category == Category.PILLS
-                  //           ? "background-2"
-                  //           : category == Category.ASKUS
-                  //               ? "onboard1"
-                  //               : "onboard2"),
-                  //   style: TextStyle(
-                  //     color: Colors.grey[600],
-                  //     fontSize: 14,
-                  //   ),
-                  // ),
-                ],
+              // TextButton(
+              //   onPressed: () {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => FaqsPage()));
+              //   },
+              //   child: ListTile(
+              //     title: Text("FAQs"),
+              //     trailing: Icon(Icons.info),
+              //   ),
+              // ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AboutUs()));
+                },
+                child:  ListTile(
+                  title: Text("About us",style: TextStyle( fontSize: 17),),
+                  trailing: Icon(Icons.person,size: 28,),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PillsBrands()));
+                },
+                child:  ListTile(
+                  title: Text("Pills brands",style: TextStyle(fontSize: 17),),
+                  trailing: Icon(Icons.medication_outlined,size: 28,),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => FormFour()));
+                },
+                child:  ListTile(
+                  title: Text("Ask query",style: TextStyle( fontSize: 17),),
+                  trailing: Icon(Icons.query_stats,size: 28,),
+                ),
+              ),
+              // TextButton(
+              //   onPressed: () {
+              //     Navigator.push(
+              //         context, MaterialPageRoute(builder: (context) => Demo()));
+              //   },
+              //   child: ListTile(
+              //     title: Text("Trial translate"),
+              //     trailing: Icon(Icons.translate),
+              //   ),
+              // ),
+              TextButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pop(context);
+                },
+                child: ListTile(
+                  title: Text("Logout",style: TextStyle( fontSize: 17),),
+                  trailing: Icon(Icons.logout,size: 28,),
+                ),
               ),
             ],
           ),
         ),
       ),
+      // backgroundColor: Color(0xfff8f8f8),
+      body: Stack(
+        children:<Widget>[ SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.20,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    color: Color(0xffFFE3ED),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(45),
+                        bottomRight: Radius.circular(45)),
+                  ),
+                  child: Container(
+                    margin: EdgeInsets.only(right: 15, top: 20, bottom: 40),
+                    alignment: Alignment.centerLeft,
+                    padding: EdgeInsets.only(left: 30, right: 18, bottom: 0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Welcome to, \nContraCare!",
+                          style: GoogleFonts.quicksand(
+                                fontSize: 32,fontWeight: FontWeight.w500
+                                 ,
+                                color: Colors.grey[800],
+                              ),
+                        ),
+                        Container(
+                          child: Padding(padding: EdgeInsets.only(left: 30),child: Image.asset("assets/images/img2.png",fit: BoxFit.contain,)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                //SizedBox(height: 80,),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(color: Color(0xffFFFDF9),
+                        child: RecomendsPlants(),
+                      ),
+                      SizedBox(
+                        height: 0,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.all(12),
+                          child: DemoApp()),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],),
     );
   }
 }

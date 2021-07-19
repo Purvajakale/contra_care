@@ -11,9 +11,9 @@ class _UserQueryState extends State<UserQuery> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Test UserQuery'),
-      // ),
+      appBar: AppBar(
+        title: Text('UserQuery'),
+      ),
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance.collection('query').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -24,7 +24,7 @@ class _UserQueryState extends State<UserQuery> {
                   return Container(
                     child: ListTile(
                       title: Text(
-                        snapshot.data.docs[index]['name'],
+                       '${snapshot.data.docs[index]['name']}',
                         style: TextStyle(fontSize: 20),
                       ),subtitle: Text(
                         snapshot.data.docs[index]['desc'],

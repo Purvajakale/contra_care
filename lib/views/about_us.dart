@@ -1,4 +1,6 @@
+import 'package:contra_care/provider/language_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutUs extends StatefulWidget {
   @override
@@ -63,12 +65,12 @@ class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        brightness: Brightness.light,
-        iconTheme: IconThemeData(color: Colors.black87),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.blue,
+      //   elevation: 0.0, 
+      //   brightness: Brightness.light,
+      //   iconTheme: IconThemeData(color: Colors.black87),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 22),
@@ -88,10 +90,9 @@ class _AboutUsState extends State<AboutUs> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          "Contracare",
-                          style: TextStyle(fontSize: 30),
-                        ),
+                        // Text(AppLocalizations.of(context).helloWorld,
+                        //   style: TextStyle(fontSize: 30),
+                        // ),
                         Text(
                           "by Dr. ABCDEFG",
                           style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -119,7 +120,7 @@ class _AboutUsState extends State<AboutUs> {
                               onTap: alertboxcall,
                               child: IconTile(
                                 backColor: Color(0xffEBECEF),
-                                imgAssetPath: "assets/images/video_call.png",
+                                imgAssetPath: "assets/images/call.png",
                               ),
                             ),
                           ],
@@ -230,73 +231,7 @@ Open till 7 Pm''',
               SizedBox(
                 height: 22,
               ),
-              // Row(
-              //   children: <Widget>[
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.symmetric(vertical: 24,horizontal: 16),
-              //         decoration: BoxDecoration(
-              //             color: Color(0xffFBB97C),
-              //             borderRadius: BorderRadius.circular(20)),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: <Widget>[
-              //             Container(
-              //                 padding: EdgeInsets.all(8),
-              //                 decoration: BoxDecoration(
-              //                     color: Color(0xffFCCA9B),
-              //                     borderRadius: BorderRadius.circular(16)
-              //                 ),
-              //                 child: Image.asset("assets/images/list.png")),
-              //             SizedBox(
-              //               width: 16,
-              //             ),
-              //             Container(
-              //               width: MediaQuery.of(context).size.width/2 - 130,
-              //               child: Text(
-              //                 "List Of Schedule",
-              //                 style: TextStyle(color: Colors.white,
-              //                     fontSize: 15),
-              //               ),
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //     SizedBox(width: 15,),
-              //     Expanded(
-              //       child: Container(
-              //         padding: EdgeInsets.symmetric(vertical: 24,horizontal: 16),
-              //         decoration: BoxDecoration(
-              //             color: Color(0xffA5A5A5),
-              //             borderRadius: BorderRadius.circular(20)),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: <Widget>[
-              //             Container(
-              //                 // padding: EdgeInsets.all(8),
-              //                 decoration: BoxDecoration(
-              //                     color: Color(0xffBBBBBB),
-              //                     borderRadius: BorderRadius.circular(16)
-              //                 ),
-              //                 child: Image.asset("assets/images/list.png")),
-              //             SizedBox(
-              //               width: 16,
-              //             ),
-              //             Container(
-              //               width: MediaQuery.of(context).size.width/2 - 130,
-              //               child: Text(
-              //                 "Doctor's Daily Post",
-              //                 style: TextStyle(color: Colors.white,
-              //                     fontSize: 15),
-              //               ),
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // )
+           
             ],
           ),
         ),

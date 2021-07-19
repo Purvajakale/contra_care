@@ -17,6 +17,7 @@ dependencies:
   translator: ^0.1.7
   curved_navigation_bar: ^1.0.1
   cloud_firestore: ^2.3.0
+  tinycolor: ^1.0.3
   firebase_core: ^1.2.1
   carousel_slider: ^3.0.0
   flutter_email_sender: ^5.0.2
@@ -31,8 +32,13 @@ dependencies:
   animated_text_kit: ^2.5.3
   animated_widgets: ^1.0.6
   http: ^0.13.3
+  provider: ^4.3.3
   flushbar: ^1.10.4
+  google_fonts: ^2.1.0
   email_validator: ^1.0.0
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
 
 flutter_launcher_name:
   name: "Contracare"
@@ -43,6 +49,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true 
   assets:
     - assets/images/
 

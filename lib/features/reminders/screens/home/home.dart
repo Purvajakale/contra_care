@@ -17,7 +17,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   //-------------------| Flutter notifications |-------------------
   final Notifications _notifications = Notifications();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -46,8 +45,8 @@ class _HomeState extends State<Home> {
   }
 
   //init notifications
-  Future initNotifies() async => flutterLocalNotificationsPlugin = await _notifications.initNotifies(context);
-
+  Future initNotifies() async => flutterLocalNotificationsPlugin =
+      await _notifications.initNotifies(context);
 
   //--------------------GET ALL DATA FROM DATABASE---------------------
   Future setData() async {
@@ -68,8 +67,8 @@ class _HomeState extends State<Home> {
       elevation: 5.0,
       onPressed: () async {
         //refresh the pills from database
-        await  Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AddNewMedicine()))
+        await Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AddNewMedicine()))
             .then((_) => setData());
       },
       child: Icon(
@@ -97,15 +96,18 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 3.0),
                   child: Container(
-                    alignment: Alignment.topCenter,//changes made
+                    alignment: Alignment.topCenter, //changes made
                     height: deviceHeight * 0.12,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Pills Tracker",style: TextStyle(fontWeight: FontWeight.w700,
-                    fontSize: 35,color: Colors.green[800],
-                    fontFamily: "Popins"),
+                          "Pills Tracker",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 35,
+                              color: Color(0xff7c83fd),
+                              fontFamily: "Popins"),
                           /*style: Theme.of(context)
                               .textTheme
                               .headline1
@@ -118,7 +120,8 @@ class _HomeState extends State<Home> {
                           shakeAngle: Rotation.deg(z: 30),
                           child: Icon(
                             Icons.notifications_none,
-                            size: 42.0,color: Colors.green,
+                            size: 42.0,
+                            color: Colors.greenAccent[400],
                           ),
                         )
                       ],
@@ -130,26 +133,31 @@ class _HomeState extends State<Home> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Calendar(chooseDay,_daysList),
+                  child: Calendar(chooseDay, _daysList),
                 ),
                 SizedBox(height: deviceHeight * 0.03),
                 dailyPills.isEmpty
                     ? SizedBox(
                         width: double.infinity,
-                        height: 100,
-                        child: WavyAnimatedTextKit(
-                          textStyle: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green[700]),
-                          text: [
-                            "Add pills here..."
-                          ],
-                          isRepeatingAnimation: true,
-                          speed: Duration(milliseconds: 150),
-                        ),
+                        height: 350,
+                        child: (Image(
+                          image: AssetImage('assets/images/calen.jpg'),
+                          fit: BoxFit.cover,
+                        )),
+                        // child: WavyAnimatedTextKit(
+                        //   textStyle: TextStyle(
+                        //       fontSize: 30.0,
+                        //       fontWeight: FontWeight.bold,
+                        //       color: Color(0xff7c83fd)),
+                        //   text: [
+                        //     "Add pills here..."
+                        //   ],
+                        //   isRepeatingAnimation: true,
+                        //   speed: Duration(milliseconds: 150),
+                        // ),
                       )
-                    : MedicinesList(dailyPills,setData,flutterLocalNotificationsPlugin)
+                    : MedicinesList(
+                        dailyPills, setData, flutterLocalNotificationsPlugin)
               ],
             ),
           ),
@@ -158,27 +166,28 @@ class _HomeState extends State<Home> {
     );
   }
 
-
   //-------------------------| Click on the calendar day |-------------------------
 
-  void chooseDay(CalendarDayModel clickedDay){
+  void chooseDay(CalendarDayModel clickedDay) {
     setState(() {
       _lastChooseDay = _daysList.indexOf(clickedDay);
-      _daysList.forEach((day) => day.isChecked = false );
+      _daysList.forEach((day) => day.isChecked = false);
       CalendarDayModel chooseDay = _daysList[_daysList.indexOf(clickedDay)];
       chooseDay.isChecked = true;
       dailyPills.clear();
       allListOfPills.forEach((pill) {
-        DateTime pillDate = DateTime.fromMicrosecondsSinceEpoch(pill.time * 1000);
-        if(chooseDay.dayNumber == pillDate.day && chooseDay.month == pillDate.month && chooseDay.year == pillDate.year){
+        DateTime pillDate =
+            DateTime.fromMicrosecondsSinceEpoch(pill.time * 1000);
+        if (chooseDay.dayNumber == pillDate.day &&
+            chooseDay.month == pillDate.month &&
+            chooseDay.year == pillDate.year) {
           dailyPills.add(pill);
         }
       });
-      dailyPills.sort((pill1,pill2) => pill1.time.compareTo(pill2.time));
+      dailyPills.sort((pill1, pill2) => pill1.time.compareTo(pill2.time));
     });
   }
 
   //===============================================================================
-
 
 }

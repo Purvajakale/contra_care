@@ -13,10 +13,10 @@ class AuthService {
 
   // sign in anon
   Future signInAnon() async {
-    try {
+    try {createData();
       UserCredential result = await _auth.signInAnonymously();
       User user = result.user;
-      createData();
+      
       return user;
     } catch (e) {
       print(e.toString());
@@ -26,15 +26,17 @@ class AuthService {
   void createData() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      
       DocumentReference ref = await db
           .collection('users')
           .add({'email':null,'role':_role,'name':_name});
-      setState(() => id = ref.id);
+          id =ref.id;
+      //setState(() => id = ref.id);
     }
   }
 
 
 }
 
-void setState(String Function() param0) {
-}
+//void setState(String Function() param0) {
+//}

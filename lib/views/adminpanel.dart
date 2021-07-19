@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contra_care/services/admin_faqs_update.dart';
 import 'package:contra_care/services/admin_pills_update.dart';
-import 'package:contra_care/services/translate.dart';
 import 'package:contra_care/views/user_queries.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,7 +57,7 @@ class _AdminPanelState extends State<AdminPanel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('admin'),
+          title: Text('Admin'),backgroundColor: Color(0xff7c83fd),
           actions: [IconButton(icon: Icon(Icons.logout), onPressed: signOut)]),
       drawer: Container(
         color: Colors.white,
@@ -167,38 +166,41 @@ class _AdminPanelState extends State<AdminPanel> {
               stream: FirebaseFirestore.instance.collection('users').snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) return Text('loading users');
-                return ListView.builder(
-                    itemCount: snapshot.data.size,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        // child: ListTile(
-                        //
-                        //   title: Text(
-                        //     snapshot.data.docs[index]['name'],
-                        //     style: TextStyle(fontSize: 20),
-                        //   ),
-                        // ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: NeumorphicContainer(
-                            height: 50,
-                            width: 60,
-                            borderRadius: 150,
-                            depth: 20,
-                            primaryColor: Colors.white,
-                            borderColor: Colors.indigo,
-                            borderThickness: 1,
-                            curvature: Curvature.flat,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 20, top: 13),
-            
-                              child: Text(snapshot.data.docs[index]['name'],
-                              style: TextStyle(fontSize: 17),),
-                            ),
-                          ),
-                        ),
-                      );
-                    });
+                return Container(child: Text(''),);
+                // return ListView.builder(
+                //     itemCount: snapshot.data.size,
+                //     itemBuilder: (context, index) {
+                //       return Column(
+                //         children:[ Container(
+                //           // child: ListTile(
+                //           //
+                //           //   title: Text(
+                //           //     snapshot.data.docs[index]['name'],
+                //           //     style: TextStyle(fontSize: 20),
+                //           //   ),
+                //           // ),
+                //           child: Padding(
+                //             padding: const EdgeInsets.all(10.0),
+                //             child:Container(
+                //               height: 50,
+                //               width: 60,
+                //               // borderRadius: 150,
+                //               // depth: 20,
+                //               // primaryColor: Colors.white,
+                //               // borderColor: Colors.indigo,
+                //               // borderThickness: 1,
+                //               // curvature: Curvature.flat,
+                //               child: Padding(
+                //                 padding: const EdgeInsets.only(left: 20, top: 13),
+                                  
+                //                 child: Text(snapshot.data.docs[index]['name'],
+                //                 style: TextStyle(fontSize: 17),),
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //         ],);
+                //     });
               }
        ),
      ),
